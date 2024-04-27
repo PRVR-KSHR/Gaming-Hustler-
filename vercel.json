@@ -1,5 +1,17 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/set-cookie",
+      "headers": [
+        {
+          "key": "Set-Cookie",
+          "value": "session_id=12345; Path=/; HttpOnly; SameSite=None; Secure"
+        }
+      ]
+    }
+  ]
+}
