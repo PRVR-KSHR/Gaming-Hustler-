@@ -54,7 +54,7 @@ const PopularInstructor = () => {
                   Host
                 </div>
                 <div className="text-red-300 mb-4 whitespace-nowrap">
-                  Total Students : {instructor?.totalEnrolled}
+                  Total Players : {instructor?.totalEnrolled}
                 </div>
                 <div className="flex flex-row items-center justify-center gap-4 text-gray-800 my-auto text-2xl mx-auto md:mx-0">
                 <a
