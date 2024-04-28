@@ -49,7 +49,7 @@ const ShowInstructors = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 pb-10 ">
         {instructors.map((instructor) => (
           <div key={instructor._id} className="max-w-sm mb-4">
-            <div className="card relative h-64 w-[370px] rounded-3xl perspective-2000">
+            <div className="card relative h-64 w-[400px] rounded-3xl perspective-2000">
               {/* Front Part */}
               <div className="front absolute p-4 w-full h-full text-center text-white  rounded-3xl backface-hidden bg-#18518F">
                 <div className="column mb-10">
@@ -67,7 +67,7 @@ const ShowInstructors = () => {
                   <div className="absolute h-5 w-full top-[160px] -left-0 rounded-b-3xl bg-gray-600 "></div>
                   <div className="item absolute h-4 w-[200px] top-[145px] right-20 rounded-t-3xl bg-red-500"></div>
                 </div>
-                <div className="flex justify-center items-center h-[95px] w-[370px] pt-2 -ml-4 rounded-b-3xl text-sm font-medium bg-zinc-400">
+                <div className="flex justify-center items-center h-[95px] w-[400px] pt-2 -ml-4 rounded-b-3xl text-sm font-medium bg-zinc-400">
                   <a href="#" className="px-4">
                     View Profile
                   </a>
@@ -103,7 +103,7 @@ const ShowInstructors = () => {
                     <FontAwesomeIcon icon={faPhone} />
                     <FontAwesomeIcon icon={faEnvelope} />
                   </div>
-                  <div className="absolute h-[120px] w-4 mr-12 rounded-tl-3xl rounded-bl-3xl bg-red-500"></div>
+                  <div className="absolute h-[180px] w-4 mr-12 rounded-tl-3xl rounded-bl-3xl bg-red-500"></div>
                 </div>
               </div>
             </div>

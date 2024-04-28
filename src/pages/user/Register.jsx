@@ -51,7 +51,7 @@ const Register = () => {
   // Function to check if the email is already registered
   const checkEmail = async (email) => {
     try {
-        const response = await axios.get(`https://gaming-hustler-server.onrender.com/check-email?email=${email}`);
+        const response = await axios.get(`http://localhost:3000/check-email?email=${email}`);
         if (response.status === 200) {
             if (response.data.exists) {
                 setEmailError('Email is alerady used');
@@ -99,7 +99,7 @@ const Register = () => {
 
               if (user.email && user.displayName) {
                 return axios
-                  .post("https://gaming-hustler-server.onrender.com/new-user", userImp)
+                  .post("http://localhost:3000/new-user", userImp)
                   .then(() => {
                     navigate("/");
                     return "Registration successful!";

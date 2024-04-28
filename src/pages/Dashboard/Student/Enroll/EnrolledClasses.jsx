@@ -4,6 +4,7 @@ import { useUser } from '../../../../hooks/useUser';
 import { Pagination, ThemeProvider, createTheme } from '@mui/material';
 import { v4 } from 'uuid';
 import { ScaleLoader } from 'react-spinners';
+
 const EnrolledClasses = () => {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
@@ -24,7 +25,6 @@ const EnrolledClasses = () => {
         },
     });
 
-
     useEffect(() => {
         axiosSecure.get(`/enrolled-classes/${currentUser.email}`)
             .then(res => {
@@ -34,12 +34,10 @@ const EnrolledClasses = () => {
             .catch(err => console.log(err))
     }, [])
 
-    // Pagination
     useEffect(() => {
         let lastIndex = page * itemPerPage;
         let firstIndex = lastIndex - itemPerPage;
 
-        // Adjust lastIndex if it exceeds the total number of items
         if (lastIndex > data.length) {
             lastIndex = data.length;
         }
@@ -48,18 +46,23 @@ const EnrolledClasses = () => {
         setPaginatedData(currentData);
     }, [page, totalPage]);
 
-
-
-
     const handleChange = (event, value) => setPage(value);
-    if (loading) { // [2
+
+    // Calculate total price for all enrolled classes
+    const totalPrice = data.reduce((acc, item) => {
+        const totalPrize = parseInt(item.classes.prizePoolFirst) + parseInt(item.classes.prizePoolSecond) + parseInt(item.classes.prizePoolThird);
+        const totalSlots = parseInt(item.classes.slot);
+        const pricePerSlot = totalPrize / totalSlots;
+        return acc + pricePerSlot + 20; // Assuming an additional fee of 20
+    }, 0);
+
+    if (loading) {
         return <div className='h-full w-full flex justify-center items-center'><ScaleLoader color="#FF1949" /></div>;
     }
     return (
         <div>
-            <div className="text-center  my-10">
+            <div className="text-center my-10">
                 <h1 className="text-2xl font-bold text-gray-700">Enrolled tournaments</h1>
-
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -84,12 +87,12 @@ const EnrolledClasses = () => {
                         />
 
                         <div className="flex-1
-                  w-full
-                  flex flex-col
-                  items-baseline
-                  justify-around h-1/2
-                  pl-6
-                  sm:h-full sm:items-baseline sm:w-1/2
+                 w-full
+                 flex flex-col
+                 items-baseline
+                 justify-around h-1/2
+                 pl-6
+                 sm:h-full sm:items-baseline sm:w-1/2
                 ">
                             <div className="flex flex-col justify-start items-baseline">
                                 <h1 title={item.classes.name} className="text-lg font-normal mb-0 text-gray-600 font-sans">
@@ -101,7 +104,7 @@ const EnrolledClasses = () => {
                                 {item.classes.description?.length > 100 ? item.classes.description.slice(0, 100) + '...' : item.classes.description}
                             </p>
                             <div className="w-full flex justify-between items-center">
-                                <h1 className="font-bold text-gray-500">₹{parseInt(item.classes.prizePoolFirst) + parseInt(item.classes.prizePoolSecond) + parseInt(item.classes.prizePoolThird)}</h1>
+                                <h1 className="font-bold text-gray-500">₹{totalPrice.toFixed(2)}</h1>
                                 <button
                                     className="bg-secondary font-bold rounded-xl mr-5 text-white px-3 py-1 shadow-md"
                                 >

@@ -56,8 +56,13 @@ const SelectedClass = () => {
         const currentItems = classes.slice(firstIndex, lastIndex);
         setPaginatedData(currentItems);
     }, [page, classes])
-    // Adjusted totalPrice calculation
-    const totalPrice = classes.reduce((acc, item) => acc + parseInt(item.prizePoolFirst) + parseInt(item.prizePoolSecond) + parseInt(item.prizePoolThird), 0);
+    // Corrected totalPrice calculation
+    const totalPrice = classes.reduce((acc, item) => {
+        const totalPrize = parseInt(item.prizePoolFirst) + parseInt(item.prizePoolSecond) + parseInt(item.prizePoolThird);
+        const totalSlots = parseInt(item.slot);
+        const pricePerSlot = totalPrize / totalSlots;
+        return acc + pricePerSlot + 20;
+    }, 0);
     const totalTax = totalPrice * 0.01;
     const price = totalPrice + totalTax;
 
@@ -169,12 +174,12 @@ const SelectedClass = () => {
                                 <h2 className="text-lg font-semibold mb-4">Summary</h2>
                                 <div className="flex justify-between mb-2">
                                     <span>Subtotal</span>
-                                    <span>₹{totalPrice}</span>
+                                    <span>₹{totalPrice.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between mb-2">
                                     <span>Taxes</span>
                                     <span>
-                                        ₹{totalTax.toFixed(2)}
+                                        ₹{(totalPrice * 0.01).toFixed(2)}
                                     </span>
                                 </div>
                                 <div className="flex justify-between mb-2">
@@ -184,7 +189,7 @@ const SelectedClass = () => {
                                 <hr className="my-2" />
                                 <div className="flex justify-between mb-2">
                                     <span className="font-semibold">Total</span>
-                                    <span className="font-semibold">${price.toFixed(2)}</span>
+                                    <span className="font-semibold">₹{(totalPrice + totalPrice * 0.01).toFixed(2)}</span>
                                 </div>
                                 <motion.button
                                     whileHover={{ scale: 1.1 }}
